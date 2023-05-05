@@ -1,0 +1,74 @@
+<%- include("header") %>
+
+    <div class="breadcrumbs">
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1>Profile Update</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    <ol class="breadcrumb text-right">
+                        <li><a href="/dashbord">Dashboard</a></li>
+                        <li class="active">Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content mt-3">
+        <div class="animated fadeIn">
+
+            <div class="row">
+
+                <div class="col-xs-6 col-sm-6">
+                    <div class="card">
+                        <div class="card-header">User Profile Update</div>
+                        <div class="card-body card-block">
+                            <form action="/ProfileUpdate" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label class=" form-control-label">User_name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                        <input type="text" id="username" value="<%= locals.saveLoginData.name %>" name="name" placeholder="Username" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Email address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+                                        <input type="email"  value="<%= locals.saveLoginData.email %>" name="email" placeholder="Email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Password </label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+                                        <input type="password" value="<%= locals.saveLoginData.password %>"  name="password" placeholder="Password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="file-input" class=" form-control-label">User_Images:-</label>
+                                        <input class="form-control-file" type="file" name="avtar" >
+                                    </div>
+                                    <br>
+                                        <img src="/<%= locals.saveLoginData.avtar %>" width="100">
+                                </div>
+                                <div style="display: grid;" class="form-actions form-group">
+                                    <button type="submit" class="rounded btn btn-success">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- .animated -->
+    </div><!-- .content -->
+
+
+    <%- include("footer") %>
