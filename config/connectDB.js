@@ -1,8 +1,8 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
 const connectdb = async () => {
-  // const db = await mongoose.connect("mongodb://127.0.0.1:27017/FinalProject");
-  const db = await mongoose.connect("mongodb+srv://mayankkathiriya008:36MgeSx1QkbV3e2z@nodejs.exnjezb.mongodb.net/FinalProject?retryWrites=true&w=majority");
+  const db = await mongoose.connect(process.env.MONGO_URL);
 
   if(db){
     console.log("db connected");
