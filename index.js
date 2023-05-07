@@ -25,7 +25,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true,
     store : new connect_session({
-        mongoUrl : "mongodb://127.0.0.1:27017/FinalProject",
+        mongoUrl : "mongodb+srv://mayankkathiriya008:36MgeSx1QkbV3e2z@nodejs.exnjezb.mongodb.net/FinalProject?retryWrites=true&w=majority",
         collectionName : "sessions"
     }),
     cookie: {
