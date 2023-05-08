@@ -3,32 +3,27 @@ const nodemailer = require("nodemailer");
 const path = require("path");
 const fs = require("fs");
 let imgPath = path.join("uploads");
-
 const login = (req, res) => {
     if (res.locals.saveLoginData) {
         return res.redirect("/dashbord");
     }
     return res.render("index");
 }
-
 const register = (req, res) => {
     if (res.locals.saveLoginData) {
         return res.redirect("/dashbord");
     }
     return res.render("register");
 }
-
 const dashbord = (req, res) => {
     return res.render("dashbord");
 }
-
 const loginData = async (req, res) => {
     if (!req.cookies.otp_obj) {
         return res.redirect("/dashbord");
     }
     return res.redirect("back");
 }
-
 const RegData = async (req, res) => {
     try {
         const email = req.body.email;
@@ -42,12 +37,10 @@ const RegData = async (req, res) => {
             console.log("User Not Register With Same Email");
             return res.redirect("back");
         }
-
     } catch (error) {
         console.log(error.message);
     }
 }
-
 const logout = (req, res) => {
     req.logout((error) => {
         if (error) {
@@ -57,22 +50,18 @@ const logout = (req, res) => {
         return res.redirect("/admin");
     });
 }
-
 const forgot = (req, res) => {
     return res.render("forgot");
 }
-
 const otp = (req, res) => {
     if (req.cookies.otp_obj) {
         return res.render("otp-page");
     }
     return res.redirect("back");
 }
-
 const forgotData = async (req, res) => {
     try {
         let email = req.body.email;
-
         const compaier = await RegisterModel.findOne({ email });
         const id = compaier.id;
         if (!compaier) {
@@ -81,7 +70,6 @@ const forgotData = async (req, res) => {
         }
         else {
             let otp = Math.floor(Math.random() * 1000000);
-
             let obj = { email, otp, id }
             const transpoter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
@@ -92,14 +80,12 @@ const forgotData = async (req, res) => {
                     pass: "kzhsmlavbhbjcylc"
                 }
             });
-
             let mailoptions = {
                 from: "mayankkathiriya008@gmail.com",
                 to: email,
                 subject: "For Your Reset Password Mail Form Sufee Admin",
                 text: `Your One Time Password(OTP) is :- ${otp}`,
             };
-
             transpoter.sendMail(mailoptions, (err, info) => {
                 if (err) {
                     console.log(err.message);
@@ -109,40 +95,30 @@ const forgotData = async (req, res) => {
                     return res.redirect("/otp");
                 }
             });
-
         }
     } catch (error) {
         console.log(error.message);
     }
 }
-
 const otpData = async (req, res) => {
-
     if (req.body.otp == req.cookies.otp_obj.otp) {
         res.cookie("check", req.body.otp);
         return res.redirect("/reset");
     }
     console.log("otp Not Match");
     return res.redirect("back");
-
 }
-
-
 const reset = (req, res) => {
     if (req.cookies.check) {
         return res.render("reset");
     }
     return res.redirect("/otp");
 }
-
 const resetData = async (req, res) => {
-
     try {
-
         let id = req.cookies.otp_obj.id;
         let password = req.body.password;
         if (req.body.password == req.body.cpassword) {
-
             const update = await RegisterModel.findByIdAndUpdate(id, { password });
             if (update) {
                 res.clearCookie("otp_obj");
@@ -157,13 +133,10 @@ const resetData = async (req, res) => {
         console.log(error.message);
         return false;
     }
-
 }
-
 const profile = (req, res) => {
     return res.render("profile");
 }
-
 const ProfileUpdate = async (req, res) => {
     try {
         let id = res.locals.saveLoginData._id;
@@ -184,14 +157,11 @@ const ProfileUpdate = async (req, res) => {
                 return res.redirect("/dashbord");
             }
         }
-
     } catch (error) {
         console.log(error.message);
         return res.redirect("back");
     }
 }
-
-
 module.exports = {
     login,
     register,
