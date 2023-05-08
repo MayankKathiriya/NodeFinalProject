@@ -1,23 +1,18 @@
 const blogModel = require("../models/userModels/blog.model");
-
 const path = require("path");
 const fs = require("fs");
 let imgPath = path.join("uploads");
-
 const blog = async (req, res) => {
     try {
         const data = await blogModel.find({});
-
         return res.render("blogForm", { data });
     } catch (error) {
         console.log(error.message);
     }
 }
-
 const addBlogData = async (req, res) => {
     try {
         let avtar = `${imgPath}/${req.file.filename}`;
-
         const adds = await blogModel.create(Object.assign({ avtar }, req.body));
         if (adds) {
             return res.redirect("back");
@@ -26,7 +21,6 @@ const addBlogData = async (req, res) => {
         console.log(error.message);
     }
 }
-
 const destroys = async (req, res) => {
     try {
         const { params: { _id } } = req;
@@ -37,7 +31,6 @@ const destroys = async (req, res) => {
         console.log(error.message);
     }
 }
-
 const actives = async (req, res) => {
     try {
         const { params: { id } } = req;
@@ -46,13 +39,11 @@ const actives = async (req, res) => {
             status: values
         });
         return res.redirect("back");
-
     } catch (error) {
         console.log(error.message);
         return false;
     }
 }
-
 const deactives = async (req, res) => {
     try {
         const { params: { id } } = req;
@@ -61,13 +52,11 @@ const deactives = async (req, res) => {
             status: values
         });
         return res.redirect("back");
-
     } catch (error) {
         console.log(error.message);
         return false;
     }
 }
-
 const edit = async (req, res) => {
     try {
         const { params: { _id } } = req;
@@ -75,17 +64,14 @@ const edit = async (req, res) => {
         if (data) {
             return res.render("editBlog", { data });
         }
-
     } catch (error) {
         console.log(error.message);
         return false;
     }
 }
-
 const updates = async (req, res) => {
     try {
         const { params: { _id } } = req;
-
         if (req.file) {
             let avtar = `${imgPath}/${req.file.filename}`;
             const update = await blogModel.findByIdAndUpdate(_id, Object.assign({ avtar }, req.body));
@@ -106,5 +92,4 @@ const updates = async (req, res) => {
         return false;
     }
 }
-
 module.exports = { blog, addBlogData, destroys, edit, deactives, actives, updates };
